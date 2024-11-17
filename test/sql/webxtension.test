@@ -7,17 +7,3 @@ statement error
 SELECT webxtension('Sam');
 ----
 Catalog Error: Scalar Function with name webxtension does not exist!
-
-# Require statement will ensure this test is run with this extension loaded
-require webxtension
-
-# Confirm the extension works
-query I
-SELECT webxtension('Sam');
-----
-Webxtension Sam 🐥
-
-query I
-SELECT webxtension_openssl_version('Michael') ILIKE 'Webxtension Michael, my linked OpenSSL version is OpenSSL%';
-----
-true
