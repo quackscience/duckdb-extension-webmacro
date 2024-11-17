@@ -80,6 +80,42 @@ static bool ContainsMacroDefinition(const std::string &content) {
     return false;
 }
 
+// Parse Function Name
+static std::string ExtractMacroName(const std::string &macro_sql) {
+    try {
+        // Convert to uppercase for case-insensitive matching
+        std::string upper_sql = StringUtil::Upper(macro_sql);
+        
+        // Find the MACRO keyword
+        size_t macro_pos = upper_sql.find("MACRO");
+        if (macro_pos == std::string::npos) {
+            return "unknown";
+        }
+        
+        // Find the start of the name (after MACRO and any whitespace)
+        size_t name_start = macro_pos + 5;  // length of "MACRO"
+        while (name_start < upper_sql.length() && std::isspace(upper_sql[name_start])) {
+            name_start++;
+        }
+        
+        // Find the end of the name (before the opening parenthesis)
+        size_t name_end = upper_sql.find('(', name_start);
+        if (name_end == std::string::npos) {
+            return "unknown";
+        }
+        
+        // Trim any trailing whitespace
+        while (name_end > name_start && std::isspace(upper_sql[name_end - 1])) {
+            name_end--;
+        }
+        
+        // Get the original case version of the name from the input string
+        return macro_sql.substr(name_start, name_end - name_start);
+    } catch (...) {
+        return "unknown";
+    }
+}
+
 // Function to fetch and create macro from URL
 static void LoadMacroFromUrlFunction(DataChunk &args, ExpressionState &state, Vector &result, DatabaseInstance *db_instance) {
     auto &context = state.GetContext();
@@ -129,7 +165,10 @@ static void LoadMacroFromUrlFunction(DataChunk &args, ExpressionState &state, Ve
                     throw std::runtime_error("Failed loading Macro: " + query_result->GetError());
                 }
 
-                return StringVector::AddString(result, "Successfully loaded macro");
+		// Extract macro name before executing
+                std::string macro_name = ExtractMacroName(macro_sql);
+
+                return StringVector::AddString(result, "Successfully loaded macro: " + macro_name);
 
             } catch (std::exception &e) {
                 std::string error_msg = "Error: " + std::string(e.what());
