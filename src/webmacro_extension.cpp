@@ -1,6 +1,6 @@
 #define DUCKDB_EXTENSION_MAIN
 
-#include "webxtension_extension.hpp"
+#include "webmacro_extension.hpp"
 #include "duckdb.hpp"
 #include "duckdb/common/exception.hpp"
 #include "duckdb/common/string_util.hpp"
@@ -229,17 +229,17 @@ static void LoadInternal(DatabaseInstance &instance) {
     );
 }
 
-void WebxtensionExtension::Load(DuckDB &db) {
+void WebmacroExtension::Load(DuckDB &db) {
     LoadInternal(*db.instance);
 }
 
-std::string WebxtensionExtension::Name() {
-    return "webxtension";
+std::string WebmacroExtension::Name() {
+    return "webmacro";
 }
 
-std::string WebxtensionExtension::Version() const {
-#ifdef EXT_VERSION_WEBXTENSION
-    return EXT_VERSION_WEBXTENSION;
+std::string WebmacroExtension::Version() const {
+#ifdef EXT_VERSION_WEBMACRO
+    return EXT_VERSION_WEBMACRO;
 #else
     return "";
 #endif
@@ -248,12 +248,12 @@ std::string WebxtensionExtension::Version() const {
 } // namespace duckdb
 
 extern "C" {
-DUCKDB_EXTENSION_API void webxtension_init(duckdb::DatabaseInstance &db) {
+DUCKDB_EXTENSION_API void webmacro_init(duckdb::DatabaseInstance &db) {
     duckdb::DuckDB db_wrapper(db);
-    db_wrapper.LoadExtension<duckdb::WebxtensionExtension>();
+    db_wrapper.LoadExtension<duckdb::WebmacroExtension>();
 }
 
-DUCKDB_EXTENSION_API const char *webxtension_version() {
+DUCKDB_EXTENSION_API const char *webmacro_version() {
     return duckdb::DuckDB::LibraryVersion();
 }
 }

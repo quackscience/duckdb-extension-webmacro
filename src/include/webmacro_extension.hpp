@@ -4,7 +4,7 @@
 
 namespace duckdb {
 
-class WebxtensionExtension : public Extension {
+class WebmacroExtension : public Extension {
 public:
 	void Load(DuckDB &db) override;
 	std::string Name() override;

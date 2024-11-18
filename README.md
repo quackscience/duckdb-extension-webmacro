@@ -1,4 +1,4 @@
-# DuckDB Webxtension
+# DuckDB WebMacro
 
 This extension allows loading DuckDB Macros (both scalar and table) from URLs, gists, pasties, etc.
 
