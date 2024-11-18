@@ -114,14 +114,8 @@ static std::pair<bool, std::string> ContainsDangerousCommands(const std::string 
     const std::vector<std::string> dangerous_commands = {
         "DELETE", "DROP", "TRUNCATE", "ALTER", "GRANT", "REVOKE",
         "CREATE USER", "ALTER USER", "DROP USER",
-        "CREATE DATABASE", "DROP DATABASE", 
-        "EXEC", "EXECUTE",
-        "SHUTDOWN", "RESTART",
-        "SET GLOBAL", "SET SYSTEM",
-        "LOAD EXTENSION", "UNLOAD EXTENSION",
-        "ATTACH", "DETACH",
-        "COPY", "EXPORT",
-        "UPDATE", "MERGE"
+        "DROP DATABASE", "EXEC", "EXECUTE",
+        "SHUTDOWN", "RESTART", "DETACH"
     };
 
     std::string upper_sql = StringUtil::Upper(sql);
