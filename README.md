@@ -4,7 +4,10 @@ This extension allows loading DuckDB Macros (both scalar and table) from URLs, g
 
 ### Installation
 
-> Coming Soon
+```sql
+INSTALL webmacro FROM community;
+LOAD webmacro;
+```
 
 ### Usage
 Create a DuckDB SQL Macro and save it somewhere. Here's an [example](https://gist.github.com/lmangani/518215a68e674ac662537d518799b893)
