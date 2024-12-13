@@ -10,12 +10,12 @@ LOAD webmacro;
 ```
 
 ### Usage
-Create a DuckDB SQL Macro and save it somewhere. Here's an [example](https://gist.github.com/lmangani/518215a68e674ac662537d518799b893)
+Create a DuckDB SQL Macro and save it somewhere. Here's an [example](https://gist.githubusercontent.com/lmangani/518215a68e674ac662537d518799b893)
 
 Load your remote macro onto your system using a URL: 
 
 ```sql
-SELECT load_macro_from_url('https://gist.github.com/lmangani/518215a68e674ac662537d518799b893/raw/5f305480fdd7468f4ecda3686011bab8e8e711bf/bsky.sql') as res;
+SELECT load_macro_from_url('https://gist.githubusercontent.com/lmangani/518215a68e674ac662537d518799b893/raw/5f305480fdd7468f4ecda3686011bab8e8e711bf/bsky.sql') as res;
 ┌─────────────────────────────────────────┐
 │                   res                   │
 │                 varchar                 │
