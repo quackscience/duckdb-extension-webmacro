@@ -168,7 +168,7 @@ static void LoadMacroFromUrlFunction(DataChunk &args, ExpressionState &state, Ve
                 }
 
                 if (res->status != 200) {
-                    throw std::runtime_error("HTTP error " + std::to_string(res->status) + ": " + res->reason);
+                    throw HTTPException(std::to_string(res->status) + ": " + res->reason);
                 }
 
                 // Get the SQL content
@@ -208,7 +208,9 @@ static void LoadMacroFromUrlFunction(DataChunk &args, ExpressionState &state, Ve
 
                 return StringVector::AddString(result, "Successfully loaded macro: " + macro_name);
 
-            } catch (std::exception &e) {
+            } catch (duckdb::HTTPException &e) {
+		throw;
+	    } catch (std::exception &e) {
                 std::string error_msg = "Error: " + std::string(e.what());
                 throw std::runtime_error(error_msg);
             }
