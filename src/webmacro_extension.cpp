@@ -10,12 +10,18 @@
 #include <duckdb/parser/parsed_data/create_scalar_function_info.hpp>
 #include "duckdb/common/exception/http_exception.hpp"
 
+#include "yyjson.hpp"
+
+#ifdef EMSCRIPTEN
+#include "wasm_httplib_replacement.hpp"
+#else
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.hpp"
-#include "yyjson.hpp"
+#endif
 
 namespace duckdb {
 
+#ifndef EMSCRIPTEN
 // Helper function to setup HTTP client
 static std::pair<duckdb_httplib_openssl::Client, std::string> SetupHttpClient(const std::string &url) {
     std::string scheme, domain, path;
@@ -59,7 +65,7 @@ static void HandleHttpError(const duckdb_httplib_openssl::Result &res, const std
     }
     throw std::runtime_error(err_message);
 }
-
+#endif
 
 static bool ContainsMacroDefinition(const std::string &content) {
     std::string upper_content = StringUtil::Upper(content);
