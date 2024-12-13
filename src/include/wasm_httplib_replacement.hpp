@@ -1,4 +1,5 @@
 #include <emscripten.h>
+#include "duckdb/common/exception.hpp"
 
 namespace duckdb {
 
@@ -26,7 +27,11 @@ struct WasmClient {
           const xhr = new XMLHttpRequest();
           xhr.open("GET", url, false);
           xhr.responseType = "arraybuffer";
-          xhr.send(null);
+          try {
+             xhr.send(null);
+          } catch {
+             return 0;
+          }
           if (xhr.status != 200)
             return 0;
           var uInt8Array = xhr.response;
@@ -59,8 +64,8 @@ struct WasmClient {
         path.c_str());
 
     if (!exe) {
-      res._inner.status = 404;
-      res._inner.reason = "Something went quack in Wasm land!";
+      res._inner.status = 400;
+      res._inner.reason = "Unknown error, something went quack in Wasm land! Please consult the console and or the docs at https://duckdb.org/community_extensions/extensions/webmacro";
     } else {
       res._inner.status = 200;
       uint64_t LEN = 0;
@@ -87,6 +92,8 @@ SetupHttpClient(const std::string &url) {
 }
 
 static void HandleHttpError(const WasmResult &res,
-                            const std::string &request_type) {}
+                            const std::string &request_type) {
+  throw HTTPException("Unknown problem while perfoming XMLHttpRequest");
+}
 
 } // namespace duckdb
