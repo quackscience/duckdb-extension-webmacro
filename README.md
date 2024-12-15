@@ -1,4 +1,6 @@
-# DuckDB WebMacro
+<img src="https://github.com/user-attachments/assets/46a5c546-7e9b-42c7-87f4-bc8defe674e0" width=250 />
+
+# DuckDB WebMacro Extension
 
 This extension allows loading DuckDB Macros (both scalar and table) from URLs, gists, pasties, etc.
 
@@ -15,7 +17,7 @@ Create a DuckDB SQL Macro and save it somewhere. Here's an [example](https://gis
 Load your remote macro onto your system using a URL: 
 
 ```sql
-SELECT load_macro_from_url('https://gist.githubusercontent.com/lmangani/518215a68e674ac662537d518799b893/raw/5f305480fdd7468f4ecda3686011bab8e8e711bf/bsky.sql') as res;
+SELECT load_macro_from_url('https://quacks.cc/r/search_posts') as res;
 ┌─────────────────────────────────────────┐
 │                   res                   │
 │                 varchar                 │
@@ -43,3 +45,6 @@ D SELECT * FROM search_posts('qxip.bsky.social', text := 'quack');
 │ 7 rows                                                                      9 columns (7 shown) │
 └─────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Example 
+![webmacro_example](https://github.com/user-attachments/assets/740f3092-1595-43b5-8816-7ecbb4702cbd)
